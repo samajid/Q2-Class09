@@ -3,27 +3,36 @@
 import React from "react";
 import { Button } from "./ui/button";
 import PurchaseButton from "./PurchaseButton";
+import {client} from "@/../sanity/lib/client"
 
 interface IBook {
-  id: number,
+  _id: string,
+  // id: string,
   name: string,
-  type: string,
-  available: boolean
+  //type: string,
+  //available: boolean
 }
 
 async function Cards() {
 
-  let res = await fetch("https://simple-books-api.glitch.me/books");
+  //let res = await fetch("https://simple-books-api.glitch.me/books");
   
-  let books: IBook[] = await res.json()
+  //let books: IBook[] = await res.json()
+
+  let data1 = await client.fetch('*[type == "book" {name}]');
+  let books: IBook[] = data1; 
   
-  
+  console.log(data1);
 
   return (
+    
+        
+
     <div>
       {books.map((book) => {
         return (
-            <div className="border p-4 rounded m-4" key={book.id}>
+            <div className="border p-4 rounded m-4" key={book._id}>
+              {/* <div className="border p-4 rounded m-4" key={book.id}> */}
               <h2 className="font-bold " >{book.name}</h2>
               <PurchaseButton />
             </div>
